@@ -55,6 +55,58 @@ select first_name, salary, trunc(salary*commission_pct, 1) as comm_pct,
     salary+(salary*trunc(salary*commission_pct, 1)) TotalSalary 
 from employees where job_id like 'SA_%';
 
+/*
+소수점 관련함수
+    ceil() : 소수점 이하를 무조건 올림처리
+    floor() : 무조건 버림처리
+    round(값, 자리수) : 반올림처리
+        두번째 인자가
+            없는경우: 소수점 첫번째 자리가 5 이상이면 올림, 미만이면 버림
+            있는경우: 숫자만큼 소수점이 표현되므로 그 다음수가 5 이상이면 올림, 미만이면 버림
+*/
+
+select ceil(32.8) from dual;
+select ceil(32.2) from dual; --모두 33 출력
+
+select floor(32.8) from dual;
+select floor(32.8) from dual;--모두 32 출력
+--버림과 올림처리하여 0, 1 출력
+select round(0.123), round(0.543) from dual;
+/*
+첫번째 항목 : 소수 이하 6자리까지 표현하므로 7을 올림처리
+두번째 항목: 소수 이하 4자리까지 표현하므로 1을 버림처리
+*/
+select round(0.1234567, 6), round(2.345612, 4) from dual;
+
+/*
+mod() : 나머지를 구하는 함수
+power() : 거듭제곱을 구하는 함수
+sqrt() : 제곱근(루트)를 구하는 함수
+*/
+select mod(99, 4) "99를 4로 나눈 나머지" from dual;
+select power(2, 10) "2의 10승"from dual;
+select sqrt(49) "49의 제곱근" from dual;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
