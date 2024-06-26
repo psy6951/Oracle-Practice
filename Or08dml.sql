@@ -15,7 +15,7 @@ create table tb_sample(
     manager varchar2(30)
 );
 
-desc tb_sample;
+desc tb_sample; 
 select * from tb_sample;
 
 
