@@ -13,6 +13,6 @@ CREATE TABLE member(
     만약 입력값이 없다면 현재각을 디폴트로 입력한다 */
     regidate DATE DEFAULT SYSDATE,
     /*아이디를 기본키로 지정함*/
-    PRIMARY KEY (id)
+    PRIMARY KEY (id) 
 );
 
