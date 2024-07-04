@@ -123,6 +123,60 @@ insert into board (num, title, content, id, postdate, visitcount)
 --커밋해서 실제 테이블에 적용
 commit;
 
+--본인이 주로 사용하는 아이디 추가입력하기
+insert into member values ('sunny','1234','sun',sysdate);
+select * from member;
+--레코드 입력 후 커밋을 해야 외부 프로그램에서 사용 가능함. 반드시 커밋해서 실제 테이블에 적용해야 함.
+commit;
+
+/***********************************
+모델1 방식의 회원제 게시판 제작하기
+***********************************/
+insert into board (num, title, content, id, postdate, visitcount)
+    values (seq_board_num.nextval, '지금은 봄입니다', '봄의왈츠', 'musthave', sysdate, 0);
+insert into board (num, title, content, id, postdate, visitcount)
+    values (seq_board_num.nextval, '지금은 여름입니다', '여름향기', 'musthave', sysdate, 0);
+insert into board (num, title, content, id, postdate, visitcount)
+    values (seq_board_num.nextval, '지금은 가을입니다', '가을동화', 'musthave', sysdate, 0);
+insert into board (num, title, content, id, postdate, visitcount)
+    values (seq_board_num.nextval, '지금은 겨울입니다', '겨울연가', 'musthave', sysdate, 0);
+
+select * from board;
+
+--DAO의 selectCount()메서드: board테이블의 게시물 개수 카운트
+select count(*) from board;
+select count(*) from board where title like '%겨울%';
+select count(*) from board where title like '%서유기%';
+--조건에 따라 0 혹은 그 이상의 정수값이 결과로 인출된다.
+
+--selectList() 메서드: 게시판 목록에 출력할 레코드를 정렬해서 인출
+select * from board order by num desc;
+select * from board where title like '%봄%' order by num desc;
+select * from board where content like '%내용%' order by num desc;
+select * from board where title like '%삼국지%' order by num desc;
+--조건에 따라 인출되는 레코드가 아예 없을 수도 있다.
+
+commit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
