@@ -159,20 +159,72 @@ select * from board where title like '%삼국지%' order by num desc;
 commit;
 
 
+--selectView() 메서드 : 게시물의 내용 상세보기
+/*  board테이블에는 id만 저장되어 있으므로 이름까지 출력하기 위해 
+    member테이블과 join을 걸어서 쿼리문을 구성한다. */
+select *
+    from board B inner join member M
+        on B.id=M.id
+where num=4 ; /* 2개 테이블의 모든 컬럼을 가져와서 인출한다. */
+
+/* 내용보기에서 출력할 내용만 가져오면 되므로 아래와 같이 별칭을 이용해서 
+인출할 컬럼을 지정한다.*/
+select B.*, M.name
+    from board B inner join member M
+        on B.id=M.id
+where num=5 ;
+
+--Join을 위한 참조컬럼명이 동일하므로 using으로 간단하게 표현할 수 있다.
+select *
+    from board inner join member using(id)
+where num=5 ;
 
 
+--updateVisitCount() 메서드 : 게시물 조회시 visitcount 컬럼에 1을 증가시키는 작업
+update board set visitcount = visitcount + 1 where num=2;
+select * from board;
+
+commit;
+
+--updateEdit() 메서드 : 게시물 수정을 위한 쿼리문
+update board 
+    set title='수정테스트', content='update문으로 게시물을 수정해봅니다.'
+    where num=6 ;
+select * from board;
+commit;
 
 
+/*
+모델1 게시판의 페이징 기능 추가를 위한 서브쿼리문
+*/
+--1. board 테이블의 게시물을 내림차순으로 정렬한다.
+select * from board order by num desc;
 
+--2. 내림차순으로 정렬된 상태에서 rownum을 통해 순차적인 번호를 부여한다.
+select tb.*, rownum from (
+    select*from board order by num desc) tb;
 
+--3. rownum을 통해 각 페이지에서 출력할 게시물의 구간을 결정한다.
+select*from 
+    (select tb.*, rownum rNum from 
+        (select*from board order by num desc) tb
+)
+/*where  rNum>=1 and rNum<=10;*/
+where  rNum>=11 and rNum<=20;
+/*where  rNum>=11 and rNum<=20;*/
+/*where rNum between 21 and 30*/
 
+--4. 검색어가 있는 경우에는 where절이 동적으로 추가된다. 
+  --  like절은 가장 안쪽의 쿼리문에 추가하면 된다.
+  -- 검색조건에 맞는 게시물을 인출한 후 rownum을 부여한다.
 
-
-
-
-
-
-
+select*from 
+    (select tb.*, rownum rNum from 
+        (select*from board 
+        where title like '%9번째%'
+        order by num desc) tb
+)
+where  rNum>=1 and rNum<=10;
 
 
 
